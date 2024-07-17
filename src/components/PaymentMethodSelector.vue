@@ -1,7 +1,7 @@
 <template>
 	<div class="mb-4">
 		<h2 class="text-lg font-semibold mb-2">Выберите способ оплаты</h2>
-		<div class="grid grid-cols-5 gap-4 mb-[15px]">
+		<div class="grid grid-cols-5 gap-[12px] mb-[15px]">
 			<div v-for="method in paymentMethods" :key="method.name" class="payment-method">
 				<img src="../assets/beeline-icon.svg" :alt="method.name">
 				<div class="ml-[12px]">
@@ -44,6 +44,10 @@ const paymentMethods = ref([
 	{name: 'PayPal', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
 	{name: 'Stripe', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
 	{name: 'FKWallet', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
+	{name: 'Lava', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
+	{name: 'Volet', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
+	{name: 'PerfectMoney', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
+	{name: 'Другой', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
 	{name: 'Lava', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
 	{name: 'Volet', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},
 	{name: 'PerfectMoney', commission: '8%', imgUrl: '../assets/visa-mastercard.png'},

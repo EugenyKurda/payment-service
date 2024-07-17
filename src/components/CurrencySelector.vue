@@ -11,13 +11,25 @@
 		</div>
 		<div class="button-group">
 			<div class="currency-button">
+				<img src="../assets/btc.svg" alt="btc" class="currency-icon">
+				<span>Криптовалюты</span>
+			</div>
+			<div class="currency-button">
+				<div class="current-currency">
+					<img src="../assets/rub-icon.svg" alt="RUB" class="currency-icon">
+					<span>RUB</span>
+				</div>
+				<div class="choosing-currency" @click="toggleCurrencies">
+					<img src="../assets/exchange.svg" alt="exchange" class="currency-icon">
+					<span class="ml-[10px]">Другие валюты</span>
+					<img :class="{'rotate-180': showCurrencies, 'ml-[10px]': true}" src="../assets/arrow-icon.svg" alt="arrow-icon">
+				</div>
+			</div>
+		</div>
+		<div v-if="showCurrencies" class="grid grid-cols-9 gap-[15px] mb-[15px] all-currents">
+			<div class="current-element" v-for="method in 10" :key="method">
 				<img src="../assets/rub-icon.svg" alt="RUB" class="currency-icon">
 				<span>RUB</span>
-			</div>
-			<div class="currency-button flex-between">
-				<img src="../assets/exchange.svg" alt="exchange" class="currency-icon">
-				<span>Другие валюты</span>
-				<img src="../assets/arrow-icon.svg" alt="arrow-icon" class="arrow-icon">
 			</div>
 		</div>
 	</div>
@@ -26,7 +38,10 @@
 <script setup>
 import { ref } from 'vue';
 
-const currencies = ref(['RUB', 'Другие валюты', 'Криптовалюты']);
+const showCurrencies = ref(false);
+const toggleCurrencies = () => {
+	showCurrencies.value = !showCurrencies.value;
+};
 </script>
 
 <style scoped>
@@ -95,22 +110,33 @@ const currencies = ref(['RUB', 'Другие валюты', 'Криптовал�
 .currency-button {
 	display: flex;
 	align-items: center;
-	padding: 8px 16px;
-	background-color: #fff;
-	border: 1px solid #e2e8f0;
-	border-radius: 8px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	justify-content: space-between;
+	border-radius: 12px;
+	padding: 15px 24px 15px 20px;
+	width: fit-content;
+	height: 68px;
+	box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.06);
+	background: #fff;
+}
+
+.current-currency {
+	display: flex;
+	align-items: center;
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 12px 20px 12px 16px;
+	width: 107px;
+	height: 52px;
+	margin-right: 10px;
+}
+
+.choosing-currency {
+	display: flex;
+	align-items: center;
 	cursor: pointer;
-	transition: background-color 0.3s, border-color 0.3s;
 }
 
 .currency-button:hover {
 	border-color: #e2c299;
-}
-
-.flex-between {
-	justify-content: space-between;
-	width: 200px;
 }
 
 .currency-icon {
@@ -119,8 +145,30 @@ const currencies = ref(['RUB', 'Другие валюты', 'Криптовал�
 	margin-right: 8px;
 }
 
-.arrow-icon {
-	margin-left: auto;
+.all-currents {
+	width: 100%;
+	max-height: 131px;
+	height: 100%;
+	overflow: auto;
+}
+
+.current-element {
+	display: flex;
+	align-items: center;
+	border-radius: 12px;
+	padding: 15px 24px 15px 20px;
+	width: 111px;
+	height: 58px;
+}
+
+.current-element:hover {
+	border: 2px solid #E2C299;
+}
+
+.rotate-180 {
+	transform: rotate(180deg);
+	transition: transform 0.3s;
 }
 </style>
+
 
