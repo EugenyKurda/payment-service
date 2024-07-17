@@ -172,16 +172,9 @@ const selectAmount = (amount) => {
 	border: 2px solid #E2C299;
 }
 
-.currency-symbol {
-	position: absolute;
-	right: 10px;
-	font-size: 14px;
-	color: rgba(33, 37, 41, 0.6);
-}
-
 .clear-button {
 	position: absolute;
-	right: 35px;
+	right: 20px;
 	background: none;
 	border: none;
 	font-size: 16px;
