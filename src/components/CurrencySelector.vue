@@ -19,7 +19,7 @@
 					<img src="../assets/rub-icon.svg" alt="RUB" class="w-6 h-6 mr-2">
 					<span>RUB</span>
 				</div>
-				<div class="flex items-center cursor-pointer" @click="toggleCurrencies">
+				<div class="flex items-center cursor-pointer ml-[10px]" @click="toggleCurrencies">
 					<img src="../assets/exchange.svg" alt="exchange" class="w-6 h-6">
 					<span class="ml-2">Другие валюты</span>
 					<img :class="{'rotate-180': showCurrencies, 'ml-2': true}" src="../assets/arrow-icon.svg" alt="arrow-icon">
