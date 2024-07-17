@@ -12,13 +12,13 @@
 		</div>
 		<div @click="toggleInfo" class="flex w-[469px] mb-2 cursor-pointer items-center">
 			<img src="../assets/warning-icon.svg" alt="warning-icon">
-			<p class="text-[14px] mb-0 mx-1">Внимание, при нажатии раскрывается информация про страны</p>
+			<p class="text-[14px] font-medium text-[#212529] mb-0 mx-1">Внимание, при нажатии раскрывается информация про страны</p>
 			<img :class="{'rotate-180': showInfo, 'rotate-0': !showInfo}" class="transition-transform duration-300" src="../assets/arrow-icon.svg" alt="arrow-icon">
 		</div>
 		<div v-if="showInfo" class="payments-info">
-			<p>Зачисление до 6 минут</p>
-			<p>Эта платежная система не принимает платежи из стран:</p>
-			<p>Армения, Австрия, Азербайджан, Бельгия, Болгария, Кипр, Чешская Республика, Дания, Эстония,
+			<p class="text-[14px] leading-[143%] font-[400] text-[#212529] mb-[10px]">Зачисление до 6 минут</p>
+			<p class="text-[14px] leading-[143%] font-[400] text-[#212529] mb-0">Эта платежная система не принимает платежи из стран:</p>
+			<p class="text-[14px] leading-[143%] font-[400] text-[#212529] mb-0">Армения, Австрия, Азербайджан, Бельгия, Болгария, Кипр, Чешская Республика, Дания, Эстония,
 				Финляндия, Франция, Грузия, Германия, Греция, Венгрия, Исландия, Ирландия, Испания, Италия,
 				Кыргызстан, Латвия, Литва, Люксембург, Мальта, Румыния, Сербия и Черногория, Словакия, Словения,
 				Швеция, Швейцария, Таджикистан, Турция, Туркменистан, Соединенное Королевство, Узбекистан,
@@ -120,7 +120,5 @@ const toggleInfo = () => {
 .payments-info {
 	background: #f8f9fa;
 	padding: 10px;
-	border-radius: 0.375rem;
-	border: 1px solid #e2e8f0;
 }
 </style>

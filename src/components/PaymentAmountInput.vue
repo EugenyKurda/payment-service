@@ -1,5 +1,5 @@
 <template>
-	<div class="mb-4">
+	<div>
 		<h2 class="text-lg font-semibold mb-2">Укажите сумму платежа</h2>
 		<div>
 			<div class="input-group">
@@ -71,6 +71,7 @@ const amounts = ref(['1.000₽', '2.000₽', '5.000₽', '10.000₽', '20.000₽
 	position: relative;
 	display: flex;
 	align-items: center;
+	margin-bottom: 10px;
 }
 
 .payment-input {
@@ -119,6 +120,7 @@ const amounts = ref(['1.000₽', '2.000₽', '5.000₽', '10.000₽', '20.000₽
 .button-group {
 	display: flex;
 	gap: 8px;
+	margin-bottom: 30px;
 }
 
 .amount-button {
