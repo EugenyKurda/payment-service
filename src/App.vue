@@ -4,17 +4,75 @@
 			Пополните баланс,
 			<span class="subtitle font-medium text-gray-600">чтобы получить номер для приема смс</span>
 		</h1>
-		<CurrencySelector />
-		<PaymentMethodSelector />
-		<PaymentAmountInput />
-		<button class="custom-button w-full h-16 rounded-lg px-5 font-medium text-white bg-gradient-to-r from-[#e2c299] to-[#c5a67c]">Оплатить</button>
+		<CurrencySelector :currencies="currencies" v-model="selectedCurrency" />
+		<PaymentMethodSelector :methods="paymentMethods" v-model="selectedMethod" />
+		<PaymentAmountInput :minAmount="minAmount" v-model="amount" />
+		<button @click="handlePayment" class="custom-button w-full h-16 rounded-lg px-5 font-medium text-white bg-gradient-to-r from-[#e2c299] to-[#c5a67c]">Оплатить</button>
+		<div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
 	</div>
 </template>
 
 <script setup>
-import CurrencySelector from './components/CurrencySelector.vue'
-import PaymentMethodSelector from './components/PaymentMethodSelector.vue'
-import PaymentAmountInput from './components/PaymentAmountInput.vue'
+import { ref, onMounted, computed, watch } from 'vue';
+import CurrencySelector from './components/CurrencySelector.vue';
+import PaymentMethodSelector from './components/PaymentMethodSelector.vue';
+import PaymentAmountInput from './components/PaymentAmountInput.vue';
+import axios from 'axios';
+
+const currencies = ref({});
+const paymentMethods = ref([]);
+const selectedCurrency = ref('');
+const selectedMethod = ref(null);
+const amount = ref('');
+const errorMessage = ref('');
+
+const minAmount = computed(() => selectedMethod.value?.min_amount || 0);
+
+onMounted(async () => {
+	try {
+		const response = await axios.get('/mockData.json');
+		const data = response.data.data;
+		currencies.value = data.currencies;
+		selectedCurrency.value = data.default_currency;
+		paymentMethods.value = data.currencies[selectedCurrency.value];
+
+		console.log(currencies.value, 'currencies.value ')
+		console.log(selectedCurrency.value, 'selectedCurrency.value')
+		console.log(paymentMethods.value, 'paymentMethods.value')
+	} catch (error) {
+		console.error('Ошибка загрузки данных:', error);
+	}
+});
+
+watch(selectedCurrency, (newCurrency) => {
+	paymentMethods.value = currencies.value[newCurrency];
+	selectedMethod.value = null;
+});
+
+const handlePayment = async () => {
+	if (parseInt(amount.value) < minAmount.value) {
+		errorMessage.value = `Минимальная сумма для ${selectedMethod.value.title}: ${minAmount.value}₽`;
+		return;
+	}
+
+	try {
+		console.log('Payment processed', {
+			currency: selectedCurrency.value,
+			method: selectedMethod.value.title,
+			amount: parseInt(amount.value),
+		});
+		// Пример POST-запроса для оплаты
+		// const response = await axios.post('/api/ui/payment/pay', {
+		//   currency: selectedCurrency.value,
+		//   method: selectedMethod.value.title,
+		//   amount: parseInt(amount.value),
+		// });
+		// const paymentUrl = response.data.payment_url;
+		// window.location.href = paymentUrl;
+	} catch (error) {
+		errorMessage.value = 'Ошибка при обработке платежа: ' + error.message;
+	}
+};
 </script>
 
 <style scoped>
@@ -46,4 +104,5 @@ import PaymentAmountInput from './components/PaymentAmountInput.vue'
 	background: linear-gradient(to right, #e2c299, #c5a67c);
 }
 </style>
+
 
