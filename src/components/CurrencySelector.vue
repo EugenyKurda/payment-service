@@ -1,34 +1,34 @@
 <template>
 	<div class="mb-4">
-		<div class="section-header">
-			<h2 class="section-title">Выберите валюту оплаты</h2>
-			<div class="icon-container">
-				<img src="../assets/question-icon.svg" class="question-icon" alt="question-icon">
-				<div class="tooltip">
-					<p>Тут выбирается способ которым вы будете оплачивать</p>
+		<div class="flex items-center mb-4">
+			<h2 class="text-xl text-gray-900 mr-2">Выберите валюту оплаты</h2>
+			<div class="relative inline-block">
+				<img src="../assets/question-icon.svg" class="transition-all duration-300 hover:bg-black hover:rounded-full hover:invert" alt="question-icon">
+				<div class="hidden absolute top-5 right-[-360px] transform -translate-x-1/2 text-start shadow-lg bg-white z-10 rounded-xl p-3 w-[247px] h-[56px] group-hover:block">
+					<p class="font-medium text-sm text-gray-900 leading-6">Тут выбирается способ которым вы будете оплачивать</p>
 				</div>
 			</div>
 		</div>
-		<div class="button-group">
-			<div class="currency-button">
-				<img src="../assets/btc.svg" alt="btc" class="currency-icon">
+		<div class="flex gap-4">
+			<div class="flex items-center justify-between rounded-lg p-4 w-fit h-[68px] shadow-sm bg-white cursor-pointer hover:border-[#e2c299]">
+				<img src="../assets/btc.svg" alt="btc" class="w-6 h-6 mr-2">
 				<span>Криптовалюты</span>
 			</div>
-			<div class="currency-button">
-				<div class="current-currency">
-					<img src="../assets/rub-icon.svg" alt="RUB" class="currency-icon">
+			<div class="flex items-center justify-between rounded-lg p-4 w-fit h-[68px] shadow-sm bg-white cursor-pointer hover:border-[#e2c299]">
+				<div class="flex items-center border-r border-gray-200 pr-4">
+					<img src="../assets/rub-icon.svg" alt="RUB" class="w-6 h-6 mr-2">
 					<span>RUB</span>
 				</div>
-				<div class="choosing-currency" @click="toggleCurrencies">
-					<img src="../assets/exchange.svg" alt="exchange" class="currency-icon">
-					<span class="ml-[10px]">Другие валюты</span>
-					<img :class="{'rotate-180': showCurrencies, 'ml-[10px]': true}" src="../assets/arrow-icon.svg" alt="arrow-icon">
+				<div class="flex items-center cursor-pointer" @click="toggleCurrencies">
+					<img src="../assets/exchange.svg" alt="exchange" class="w-6 h-6">
+					<span class="ml-2">Другие валюты</span>
+					<img :class="{'rotate-180': showCurrencies, 'ml-2': true}" src="../assets/arrow-icon.svg" alt="arrow-icon">
 				</div>
 			</div>
 		</div>
-		<div v-if="showCurrencies" class="grid grid-cols-9 gap-[15px] mb-[15px] all-currents">
-			<div class="current-element" v-for="method in 10" :key="method">
-				<img src="../assets/rub-icon.svg" alt="RUB" class="currency-icon">
+		<div v-if="showCurrencies" class="grid grid-cols-9 gap-3 mb-4 overflow-auto max-h-[131px]">
+			<div class="flex items-center rounded-lg p-4 w-[111px] h-[58px] cursor-pointer hover:border-2 hover:border-[#E2C299]" v-for="method in 10" :key="method">
+				<img src="../assets/rub-icon.svg" alt="RUB" class="w-6 h-6 mr-2">
 				<span>RUB</span>
 			</div>
 		</div>
@@ -45,131 +45,16 @@ const toggleCurrencies = () => {
 </script>
 
 <style scoped>
-@import '../style.css';
-
-.section-header {
-	display: flex;
-	align-items: center;
-	margin-bottom: 15px;
-}
-
-.section-title {
-	font-size: 1.25rem;
-	color: #1a202c;
-	margin-right: 8px;
-}
-
-.icon-container {
-	position: relative;
-	display: inline-block;
-}
-
-.question-icon {
-	transition: background-color 0.3s, filter 0.3s;
-}
-
-.question-icon:hover {
-	background-color: black;
-	border-radius: 50%;
-	filter: invert(1);
-}
-
-.tooltip {
+/* Скрытие элемента по умолчанию */
+.group-hover\:block {
 	display: none;
-	position: absolute;
-	top: 20px;
-	right: -360px;
-	transform: translateX(-50%);
-	color: black;
-	text-align: start;
-	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.08);
-	background: #fff;
-	z-index: 1;
-	border-radius: 0 10px 10px 10px;
-	padding: 8px 12px;
-	width: 247px;
-	height: 56px;
 }
 
-.tooltip p {
-	font-weight: 500;
-	font-size: 14px;
-	line-height: 1.43;
-	color: #212529;
-}
-
-.icon-container:hover .tooltip {
+/* Показ элемента при наведении на родителя */
+.group:hover .group-hover\:block {
 	display: block;
 }
-
-.button-group {
-	display: flex;
-	gap: 16px;
-}
-
-.currency-button {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	border-radius: 12px;
-	padding: 15px 24px 15px 20px;
-	width: fit-content;
-	height: 68px;
-	box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.06);
-	background: #fff;
-	cursor: pointer;
-}
-
-.current-currency {
-	display: flex;
-	align-items: center;
-	border-right: 1px solid rgba(0, 0, 0, 0.1);
-	padding: 12px 20px 12px 16px;
-	width: 107px;
-	height: 52px;
-	margin-right: 10px;
-}
-
-.choosing-currency {
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-}
-
-.currency-button:hover {
-	border-color: #e2c299;
-}
-
-.currency-icon {
-	width: 24px;
-	height: 24px;
-	margin-right: 8px;
-}
-
-.all-currents {
-	width: 100%;
-	max-height: 131px;
-	height: 100%;
-	overflow: auto;
-}
-
-.current-element {
-	display: flex;
-	align-items: center;
-	border-radius: 12px;
-	padding: 15px 24px 15px 20px;
-	width: 111px;
-	height: 58px;
-}
-
-.current-element:hover {
-	border: 2px solid #E2C299;
-}
-
-.rotate-180 {
-	transform: rotate(180deg);
-	transition: transform 0.3s;
-}
 </style>
+
 
 

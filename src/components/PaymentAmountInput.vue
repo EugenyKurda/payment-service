@@ -97,9 +97,14 @@ const amounts = ref(['1.000₽', '2.000₽', '5.000₽', '10.000₽', '20.000₽
 	color: #ff4d4f;
 }
 
+.payment-input:focus-visible {
+	outline: none;
+	border: 2px solid #E2C299;
+}
+
 .clear-button {
 	position: absolute;
-	right: 10px;
+	right: 15px;
 	background: none;
 	border: none;
 	font-size: 16px;

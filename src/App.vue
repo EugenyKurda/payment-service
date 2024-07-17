@@ -1,25 +1,23 @@
 <template>
-	<div class="container">
-		<h1 class="main-title">
+	<div class="container py-10 md:py-20 mx-auto">
+		<h1 class="main-title font-bold text-3xl leading-tight text-gray-900 mb-8">
 			Пополните баланс,
-			<span class="subtitle">чтобы получить номер для приема смс</span>
+			<span class="subtitle font-medium text-gray-600">чтобы получить номер для приема смс</span>
 		</h1>
 		<CurrencySelector />
 		<PaymentMethodSelector />
 		<PaymentAmountInput />
-		<button class="custom-button">Оплатить</button>
+		<button class="custom-button w-full h-16 rounded-lg px-5 font-medium text-white bg-gradient-to-r from-[#e2c299] to-[#c5a67c]">Оплатить</button>
 	</div>
 </template>
 
 <script setup>
-import CurrencySelector from './components/CurrencySelector.vue';
-import PaymentMethodSelector from './components/PaymentMethodSelector.vue';
-import PaymentAmountInput from './components/PaymentAmountInput.vue';
+import CurrencySelector from './components/CurrencySelector.vue'
+import PaymentMethodSelector from './components/PaymentMethodSelector.vue'
+import PaymentAmountInput from './components/PaymentAmountInput.vue'
 </script>
 
 <style scoped>
-@import './style.css';
-
 .container {
 	padding: 40px 0 80px 0;
 	margin: 0 auto;
