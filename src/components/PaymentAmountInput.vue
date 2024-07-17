@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import {ref, watch, onMounted, nextTick} from 'vue';
+import { ref, watch, onMounted, nextTick } from 'vue';
 
 const props = defineProps({
 	minAmount: Number,
@@ -97,22 +97,21 @@ const handleBlur = () => {
 	validateInput();
 };
 
-const nexTick = ((event) => {
-	return nextTick(() => {
-		const input = event.target;
-		input.selectionStart = input.selectionEnd = input.value.length - 1; // Move the cursor before the currency symbol
-	});
-});
-
 const handleInput = (event) => {
-	nexTick(event);
 	let value = event.target.value.replace(/[^\d]/g, ''); // Remove all non-digit characters
 	inputValue.value = value ? `${parseInt(value).toLocaleString()}` : '';
 	updateDisplayValue();
-	nexTick(event);
+	nextTick(() => {
+		const input = event.target;
+		input.selectionStart = input.selectionEnd = input.value.length - 1; // Move the cursor before the currency symbol
+	});
 };
 
 const handleKeyDown = (event) => {
+	const allowedKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'];
+	if (!allowedKeys.includes(event.key) && !/\d/.test(event.key)) {
+		event.preventDefault();
+	}
 	const input = event.target;
 	const cursorPosition = input.selectionStart;
 
