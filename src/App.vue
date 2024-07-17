@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import CurrencySelector from './components/CurrencySelector.vue';
 import PaymentMethodSelector from './components/PaymentMethodSelector.vue';
 import PaymentAmountInput from './components/PaymentAmountInput.vue';
@@ -82,20 +82,14 @@ const handlePayment = async () => {
 	}
 
 	try {
-		// Здесь будет ваш запрос на оплату
-		console.log('Payment processed', {
+		// Пример POST-запроса для оплаты
+		const response = await axios.post('/api/ui/payment/pay', {
 			currency: selectedCurrency.value,
 			method: selectedMethod.value.title,
 			amount: numericAmount,
 		});
-		// Пример POST-запроса для оплаты
-		// const response = await axios.post('/api/ui/payment/pay', {
-		//   currency: selectedCurrency.value,
-		//   method: selectedMethod.value.title,
-		//   amount: numericAmount,
-		// });
-		// const paymentUrl = response.data.payment_url;
-		// window.location.href = paymentUrl;
+
+		window.location.href = response.data.payment_url;
 	} catch (error) {
 		errorMessage.value = 'Ошибка при обработке платежа: ' + error.message;
 	}

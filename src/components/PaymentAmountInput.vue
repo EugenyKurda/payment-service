@@ -97,19 +97,19 @@ const handleBlur = () => {
 	validateInput();
 };
 
-const handleInput = (event) => {
-	nextTick(() => {
+const nexTick = ((event) => {
+	return nextTick(() => {
 		const input = event.target;
 		input.selectionStart = input.selectionEnd = input.value.length - 1; // Move the cursor before the currency symbol
 	});
+});
+
+const handleInput = (event) => {
+	nexTick(event);
 	let value = event.target.value.replace(/[^\d]/g, ''); // Remove all non-digit characters
 	inputValue.value = value ? `${parseInt(value).toLocaleString()}` : '';
 	updateDisplayValue();
-
-	nextTick(() => {
-		const input = event.target;
-		input.selectionStart = input.selectionEnd = input.value.length - 1; // Move the cursor before the currency symbol
-	});
+	nexTick(event);
 };
 
 const handleKeyDown = (event) => {
