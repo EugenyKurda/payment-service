@@ -23,7 +23,7 @@ const amounts = ref(['1.000₽', '2.000₽', '5.000₽', '10.000₽', '20.000₽
 </script>
 
 <template>
-	<div class="px-0 pt-10 pb-20">
+	<div class="container">
 		<h1 class="main-title">
 			Пополните баланс,
 			<span class="subtitle">чтобы получить номер для приема смс</span>
@@ -31,7 +31,12 @@ const amounts = ref(['1.000₽', '2.000₽', '5.000₽', '10.000₽', '20.000₽
 		<div class="mb-4">
 			<div class="section-header">
 				<h2 class="section-title">Выберите валюту оплаты</h2>
-				<img src="./assets/question-icon.svg" alt="question-icon">
+				<div class="icon-container">
+					<img src="./assets/question-icon.svg" class="question-icon" alt="question-icon">
+					<div class="tooltip">
+						<p>Тут выбирается способ которым вы будете оплачивать</p>
+					</div>
+				</div>
 			</div>
 			<div class="button-group">
 				<button v-for="currency in currencies" :key="currency" class="currency-button">
@@ -51,7 +56,7 @@ const amounts = ref(['1.000₽', '2.000₽', '5.000₽', '10.000₽', '20.000₽
 		</div>
 		<div class="mb-4">
 			<h2 class="text-lg font-semibold mb-2">Укажите сумму платежа</h2>
-			<input type="text" placeholder="Минимальная сумма платежа: 1.000₽" class="payment-input"/>
+			<input type="text" placeholder="Минимальная сумма платежа: 1.000₽" class="payment-input" />
 			<div class="button-group">
 				<button v-for="amount in amounts" :key="amount" class="amount-button">
 					{{ amount }}
@@ -65,40 +70,112 @@ const amounts = ref(['1.000₽', '2.000₽', '5.000₽', '10.000₽', '20.000₽
 <style scoped>
 @import './style.css';
 
+.container {
+	padding: 40px 0 80px 0;
+}
+
 .main-title {
-	@apply font-bold text-4xl leading-snug text-gray-900 mb-8;
+	font-weight: bold;
+	font-size: 2.25rem;
+	line-height: 1.25;
+	color: #1a202c;
+	margin-bottom: 30px;
 }
 
 .subtitle {
-	@apply font-medium text-[rgba(33,37,41,0.6)];
+	font-weight: 500;
+	color: rgba(33, 37, 41, 0.6);
 }
 
 .section-header {
-	@apply flex items-center mb-4;
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
 }
 
 .section-title {
-	@apply font-normal text-xl text-gray-900 mr-2;
+	font-size: 1.25rem;
+	color: #1a202c;
+	margin-right: 8px;
 }
 
 .button-group {
-	@apply flex space-x-4;
+	display: flex;
+	gap: 1rem;
 }
 
 .currency-button,
 .amount-button {
-	@apply p-2 bg-gray-200 rounded;
+	padding: 8px;
+	background-color: #edf2f7;
+	border-radius: 0.375rem;
 }
 
 .payment-method {
-	@apply p-4 border rounded text-center;
+	padding: 16px;
+	border: 1px solid #e2e8f0;
+	border-radius: 0.375rem;
+	text-align: center;
 }
 
 .payment-input {
-	@apply p-2 border rounded w-full mb-2;
+	padding: 8px;
+	border: 1px solid #e2e8f0;
+	border-radius: 0.375rem;
+	width: 100%;
+	margin-bottom: 8px;
 }
 
 .custom-button {
-	@apply w-full h-16 rounded-lg px-5 font-medium text-white bg-gradient-to-r from-[#e2c299] to-[#c5a67c];
+	width: 100%;
+	height: 4rem;
+	border-radius: 0.5rem;
+	padding: 0 1.25rem;
+	font-weight: 500;
+	color: #fff;
+	background: linear-gradient(to right, #e2c299, #c5a67c);
+}
+
+.icon-container {
+	position: relative;
+	display: inline-block;
+}
+
+.question-icon {
+	transition: background-color 0.3s, filter 0.3s;
+}
+
+.question-icon:hover {
+	background-color: black;
+	border-radius: 50%;
+	filter: invert(1);
+}
+
+.tooltip {
+	display: none;
+	position: absolute;
+	top: 20px;
+	right: -360px;
+	transform: translateX(-50%);
+	color: black;
+	text-align: start;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.08);
+	background: #fff;
+	z-index: 1;
+	border-radius: 0 10px 10px 10px;
+	padding: 8px 12px;
+	width: 247px;
+	height: 56px;
+}
+
+.tooltip p {
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 1.43;
+	color: #212529;
+}
+
+.icon-container:hover .tooltip {
+	display: block;
 }
 </style>
