@@ -6,7 +6,7 @@
 		</h1>
 		<CurrencySelector :currencies="currencies" v-model="selectedCurrency" />
 		<PaymentMethodSelector :methods="paymentMethods" v-model="selectedMethod" />
-		<PaymentAmountInput :minAmount="minAmount" v-model="amount" />
+		<PaymentAmountInput :minAmount="minAmount" v-model="amount" :currency="selectedCurrency" />
 		<button @click="handlePayment" class="custom-button w-full h-16 rounded-lg px-5 font-medium text-white bg-gradient-to-r from-[#e2c299] to-[#c5a67c]">Оплатить</button>
 		<div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
 	</div>
@@ -28,6 +28,21 @@ const errorMessage = ref('');
 
 const minAmount = computed(() => selectedMethod.value?.min_amount || 0);
 
+const currencySymbol = computed(() => {
+	switch (selectedCurrency.value) {
+		case 'USD':
+			return '$';
+		case 'EUR':
+			return '€';
+		case 'RUB':
+			return '₽';
+		case 'CRYPTO':
+			return '₿';
+		default:
+			return '₽';
+	}
+});
+
 onMounted(async () => {
 	try {
 		const response = await axios.get('/mockData.json');
@@ -35,10 +50,6 @@ onMounted(async () => {
 		currencies.value = data.currencies;
 		selectedCurrency.value = data.default_currency;
 		paymentMethods.value = data.currencies[selectedCurrency.value];
-
-		console.log(currencies.value, 'currencies.value ')
-		console.log(selectedCurrency.value, 'selectedCurrency.value')
-		console.log(paymentMethods.value, 'paymentMethods.value')
 	} catch (error) {
 		console.error('Ошибка загрузки данных:', error);
 	}
@@ -47,25 +58,41 @@ onMounted(async () => {
 watch(selectedCurrency, (newCurrency) => {
 	paymentMethods.value = currencies.value[newCurrency];
 	selectedMethod.value = null;
+	amount.value = '';
 });
 
 const handlePayment = async () => {
-	if (parseInt(amount.value) < minAmount.value) {
-		errorMessage.value = `Минимальная сумма для ${selectedMethod.value.title}: ${minAmount.value}₽`;
+	errorMessage.value = '';  // Сбросить сообщение об ошибке
+
+	if (!selectedCurrency.value) {
+		errorMessage.value = 'Пожалуйста, выберите валюту.';
+		return;
+	}
+
+	if (!selectedMethod.value) {
+		errorMessage.value = 'Пожалуйста, выберите метод оплаты.';
+		return;
+	}
+
+	const numericAmount = parseInt(amount.value.replace(/[^\d]/g, ''));
+
+	if (!numericAmount || numericAmount < minAmount.value) {
+		errorMessage.value = `Минимальная сумма для ${selectedMethod.value.title}: ${minAmount.value}${currencySymbol.value}`;
 		return;
 	}
 
 	try {
+		// Здесь будет ваш запрос на оплату
 		console.log('Payment processed', {
 			currency: selectedCurrency.value,
 			method: selectedMethod.value.title,
-			amount: parseInt(amount.value),
+			amount: numericAmount,
 		});
 		// Пример POST-запроса для оплаты
 		// const response = await axios.post('/api/ui/payment/pay', {
 		//   currency: selectedCurrency.value,
 		//   method: selectedMethod.value.title,
-		//   amount: parseInt(amount.value),
+		//   amount: numericAmount,
 		// });
 		// const paymentUrl = response.data.payment_url;
 		// window.location.href = paymentUrl;
@@ -104,5 +131,3 @@ const handlePayment = async () => {
 	background: linear-gradient(to right, #e2c299, #c5a67c);
 }
 </style>
-
-

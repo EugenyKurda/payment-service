@@ -4,8 +4,8 @@
 			<h2 class="text-xl text-gray-900 mr-2">Выберите валюту оплаты</h2>
 			<div class="relative inline-block group">
 				<img src="../assets/question-icon.svg" class="transition-all duration-300 hover:bg-black hover:rounded-full hover:invert" alt="question-icon">
-				<div class="hidden absolute top-5 right-[-360px] transform -translate-x-1/2 text-start shadow-lg bg-white z-10 rounded-xl p-3 w-[247px] h-[56px] group-hover:block">
-					<p class="font-medium text-sm text-gray-900 leading-6">Тут выбирается способ которым вы будете оплачивать</p>
+				<div class="hidden absolute top-5 right-[-360px] transform -translate-x-1/2 text-start shadow-lg bg-white z-10 rounded-xl p-2 w-[247px] h-[56px] group-hover:block">
+					<p class="font-medium text-[14px] text-gray-900 leading-5">Тут выбирается способ которым вы будете оплачивать</p>
 				</div>
 			</div>
 		</div>
@@ -37,10 +37,10 @@
 					v-for="(currency, key) in currencies"
 					:key="key"
 					@click="selectCurrency(key)"
-					:class="['flex items-center rounded-lg p-4 min-w-[111px] max-w-fit h-[58px] cursor-pointer hover:border-2 hover:border-[#E2C299]', {'border-2 border-[#E2C299]': selectedCurrency === key}]"
+					:class="['flex items-center rounded-lg p-4 min-w-[115px] max-w-[220px] h-[58px] cursor-pointer hover:border-2 hover:border-[#E2C299]', {'border-2 border-[#E2C299]': selectedCurrency === key}]"
 			>
 				<img :src="iconPaths[key]" :alt="key" class="w-7 h-6 mr-2">
-				<span>{{ key }}</span>
+				<span class="max-w-fit">{{ key }}</span>
 			</div>
 		</div>
 	</div>
@@ -55,6 +55,7 @@ const importIcons = () => {
 		CRYPTO: new URL('../assets/btc.svg', import.meta.url).href,
 		RUB: new URL('../assets/rub-icon.svg', import.meta.url).href,
 		USD: new URL('../assets/usd-icon.svg', import.meta.url).href,
+		Cryptomus: new URL('../assets/cryptomus.svg', import.meta.url).href,
 	};
 };
 
